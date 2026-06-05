@@ -794,6 +794,14 @@
     .footer-top { flex-direction: column; }
   }
 
+  /* ── RECORDS SUB-PAGES ── */
+  .rec-page { display: none; }
+  .rec-page.active { display: block; }
+  .rec-tab { transition: color 0.2s, border-color 0.2s; }
+  .rec-tab.active { color: var(--blue-deep) !important; border-bottom-color: var(--gold) !important; }
+  .rec-tab:hover { color: var(--blue-deep) !important; }
+  input:focus, select:focus, textarea:focus { border-color: var(--blue-mid) !important; }
+
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -1099,33 +1107,220 @@
     <p>Transparency and accountability in law enforcement.</p>
   </div>
 
-  <div class="section">
-    <div class="section-eyebrow">SAFOIA compliance</div>
-    <h2>Records &amp; transparency</h2>
-    <p class="section-intro">The San Andreas Highway Patrol complies fully with the San Andreas Freedom of Information Act. Records are available through the Office of Public Affairs.</p>
-    <div class="records-note">
-      Submit SAFOIA requests in writing to the Office of Public Affairs, SAHP Headquarters, Rockford Hills Government Center, Los Santos, SA 90210. Allow up to 10 business days for processing.
+  <!-- Records sub-nav -->
+  <div style="background:var(--off-white);border-bottom:1px solid var(--gray-200);">
+    <div style="max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;gap:0;overflow-x:auto;">
+      <button class="rec-tab active" onclick="showRec('rec-overview',this)" style="background:none;border:none;border-bottom:2px solid var(--gold);font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue-deep);padding:12px 16px;cursor:pointer;white-space:nowrap;font-weight:500;">Overview</button>
+      <button class="rec-tab" onclick="showRec('rec-incidents',this)" style="background:none;border:none;border-bottom:2px solid transparent;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);padding:12px 16px;cursor:pointer;white-space:nowrap;">Incident reports</button>
+      <button class="rec-tab" onclick="showRec('rec-stats',this)" style="background:none;border:none;border-bottom:2px solid transparent;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);padding:12px 16px;cursor:pointer;white-space:nowrap;">Annual statistics</button>
+      <button class="rec-tab" onclick="showRec('rec-roster',this)" style="background:none;border:none;border-bottom:2px solid transparent;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-400);padding:12px 16px;cursor:pointer;white-space:nowrap;">Personnel roster</button>
     </div>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-        <h3>Incident reports</h3>
-        <p>Traffic collision and incident reports available 10 business days after filing. Fee of $0.10 per page.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="rec-overview" class="rec-page">
+    <div class="section">
+      <div class="section-eyebrow">SAFOIA compliance</div>
+      <h2>Records &amp; transparency</h2>
+      <p class="section-intro">The San Andreas Highway Patrol complies fully with the San Andreas Freedom of Information Act. Records are available through the Office of Public Affairs.</p>
+      <div class="records-note">Submit SAFOIA requests in writing to the Office of Public Affairs, SAHP Headquarters, Rockford Hills Government Center, Los Santos, SA 90210. Allow up to 10 business days for processing.</div>
+      <div class="card-grid">
+        <div class="card" style="cursor:pointer;" onclick="showRec('rec-incidents',document.querySelectorAll('.rec-tab')[1])">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h3>Incident reports</h3>
+          <p>Request traffic collision and incident reports. Available 10 business days after filing.</p>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="showRec('rec-stats',document.querySelectorAll('.rec-tab')[2])">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h3>Annual statistics</h3>
+          <p>Yearly enforcement statistics, pursuit data, and use-of-force summaries.</p>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="showRec('rec-roster',document.querySelectorAll('.rec-tab')[3])">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+          <h3>Personnel roster</h3>
+          <p>Sworn officer roster by troop division, rank, and assigned station.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Use-of-force policy</h3>
+          <p>Current use-of-force continuum and pursuit intervention policy documents.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <h3>Annual statistics</h3>
-        <p>Yearly enforcement statistics, pursuit data, and use-of-force summaries published each March.</p>
+    </div>
+  </div>
+
+  <!-- INCIDENT REPORTS -->
+  <div id="rec-incidents" class="rec-page" style="display:none;">
+    <div class="section">
+      <div class="section-eyebrow">Incident reports</div>
+      <h2>Request a report</h2>
+      <p class="section-intro">Use this form to submit a SAFOIA request for traffic collision or incident reports. Requests are processed within 10 business days. A fee of $0.10 per page applies.</p>
+      <div class="records-note">You must have been directly involved in the incident, or provide written authorization from an involved party, to request a copy of a report.</div>
+
+      <form onsubmit="submitIncidentForm(event)" style="margin-top:1.5rem;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1.25rem;">
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Full name *</label>
+            <input type="text" placeholder="First and last name" required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Date of birth *</label>
+            <input type="date" required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Phone number *</label>
+            <input type="tel" placeholder="(555) 000-0000" required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Email address *</label>
+            <input type="email" placeholder="you@example.com" required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Incident date *</label>
+            <input type="date" required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Report / case number</label>
+            <input type="text" placeholder="SAHP-2026-XXXXX (if known)" style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Incident location *</label>
+            <input type="text" placeholder="Highway, route, or address" required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          </div>
+          <div>
+            <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Report type *</label>
+            <select required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+              <option value="">Select type</option>
+              <option>Traffic collision report</option>
+              <option>Incident / crime report</option>
+              <option>Arrest report</option>
+              <option>Use-of-force report</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:1.25rem;">
+          <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Your relationship to the incident *</label>
+          <select required style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+            <option value="">Select relationship</option>
+            <option>Driver / directly involved party</option>
+            <option>Passenger</option>
+            <option>Witness</option>
+            <option>Authorized representative / attorney</option>
+            <option>Insurance representative</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div style="margin-bottom:1.25rem;">
+          <label style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:6px;">Additional information</label>
+          <textarea placeholder="Any additional details that may help locate the report..." rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;resize:vertical;"></textarea>
+        </div>
+        <div style="margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:10px;">
+          <input type="checkbox" id="certify" required style="margin-top:3px;flex-shrink:0;">
+          <label for="certify" style="font-size:13px;color:var(--gray-400);line-height:1.6;">I certify that the information provided is accurate and that I am authorized to request this record under the San Andreas Freedom of Information Act.</label>
+        </div>
+        <button type="submit" style="background:var(--blue-deep);color:var(--white);border:none;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;padding:13px 32px;cursor:pointer;">Submit request</button>
+      </form>
+      <div id="form-confirm" style="display:none;margin-top:1.5rem;background:var(--blue-pale);border-left:4px solid var(--blue-mid);padding:1rem 1.25rem;">
+        <strong style="font-family:'Oswald',sans-serif;font-size:14px;color:var(--blue-deep);display:block;margin-bottom:4px;">Request submitted</strong>
+        <p style="font-size:13px;color:var(--blue-deep);margin:0;">Your request has been received. You will be contacted within 10 business days at the email address provided. Reference number: <strong id="ref-num"></strong></p>
       </div>
-      <div class="card">
-        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
-        <h3>Personnel rosters</h3>
-        <p>Sworn officer rosters by troop division, updated quarterly. Exempt personnel not listed.</p>
+    </div>
+  </div>
+
+  <!-- ANNUAL STATISTICS -->
+  <div id="rec-stats" class="rec-page" style="display:none;">
+    <div class="section">
+      <div class="section-eyebrow">Annual statistics</div>
+      <h2>2025 enforcement report</h2>
+      <p class="section-intro">Published March 2026. Covers all SAHP enforcement activity for the calendar year January 1 – December 31, 2025.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:2.5rem;">
+        <div class="stat" style="border-left:3px solid var(--blue-mid);">
+          <div class="stat-num" style="font-size:22px;">48,291</div><div class="stat-lbl">Total citations</div>
+        </div>
+        <div class="stat" style="border-left:3px solid var(--blue-mid);">
+          <div class="stat-num" style="font-size:22px;">3,847</div><div class="stat-lbl">Felony arrests</div>
+        </div>
+        <div class="stat" style="border-left:3px solid var(--blue-mid);">
+          <div class="stat-num" style="font-size:22px;">1,204</div><div class="stat-lbl">Pursuits initiated</div>
+        </div>
+        <div class="stat" style="border-left:3px solid var(--blue-mid);">
+          <div class="stat-num" style="font-size:22px;">312</div><div class="stat-lbl">UOF incidents</div>
+        </div>
+        <div class="stat" style="border-left:3px solid var(--blue-mid);">
+          <div class="stat-num" style="font-size:22px;">9,182</div><div class="stat-lbl">Collision reports</div>
+        </div>
+        <div class="stat" style="border-left:3px solid var(--blue-mid);">
+          <div class="stat-num" style="font-size:22px;">741</div><div class="stat-lbl">DUI arrests</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3>Use-of-force policy</h3>
-        <p>Current use-of-force continuum and pursuit intervention policy documents available for download.</p>
+
+      <!-- Citations by month chart -->
+      <h3 style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--blue-deep);margin-bottom:1rem;letter-spacing:0.03em;text-transform:uppercase;">Citations by month — 2025</h3>
+      <div style="background:var(--white);border:1px solid var(--gray-100);padding:1.5rem;margin-bottom:2rem;">
+        <canvas id="citationsChart" height="280"></canvas>
+      </div>
+
+      <!-- Incident types chart -->
+      <h3 style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--blue-deep);margin-bottom:1rem;letter-spacing:0.03em;text-transform:uppercase;">Enforcement breakdown — 2025</h3>
+      <div style="background:var(--white);border:1px solid var(--gray-100);padding:1.5rem;margin-bottom:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+        <canvas id="breakdownChart" height="260"></canvas>
+        <div id="breakdown-legend" style="font-size:13px;color:var(--gray-700);"></div>
+      </div>
+
+      <!-- Pursuits by troop -->
+      <h3 style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:500;color:var(--blue-deep);margin-bottom:1rem;letter-spacing:0.03em;text-transform:uppercase;">Pursuits by troop division — 2025</h3>
+      <div style="background:var(--white);border:1px solid var(--gray-100);padding:1.5rem;">
+        <canvas id="pursuitsChart" height="260"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONNEL ROSTER -->
+  <div id="rec-roster" class="rec-page" style="display:none;">
+    <div class="section">
+      <div class="section-eyebrow">Personnel roster</div>
+      <h2>Sworn officer roster</h2>
+      <p class="section-intro">Current as of Q2 2026. Exempt personnel, undercover officers, and criminal interdiction unit members are not listed. Badge numbers are assigned agency-wide.</p>
+
+      <div style="display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;">
+        <input type="text" id="roster-search" oninput="filterRoster()" placeholder="Search by name, badge, rank, or station..." style="flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+        <select id="roster-filter-div" onchange="filterRoster()" style="padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          <option value="">All divisions</option>
+          <option>Troop A</option>
+          <option>Troop B</option>
+          <option>Troop C</option>
+          <option>Troop D</option>
+          <option>Troop E</option>
+          <option>Troop F</option>
+        </select>
+        <select id="roster-filter-rank" onchange="filterRoster()" style="padding:10px 12px;border:1px solid var(--gray-200);background:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--gray-900);outline:none;">
+          <option value="">All ranks</option>
+          <option>Major</option>
+          <option>Captain</option>
+          <option>Lieutenant</option>
+          <option>Sergeant</option>
+          <option>Corporal</option>
+          <option>Trooper II</option>
+          <option>Trooper I</option>
+        </select>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table id="roster-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="background:var(--blue-deep);color:var(--blue-light);">
+              <th style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 14px;text-align:left;font-weight:400;">Badge</th>
+              <th style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 14px;text-align:left;font-weight:400;">Name</th>
+              <th style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 14px;text-align:left;font-weight:400;">Rank</th>
+              <th style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 14px;text-align:left;font-weight:400;">Division</th>
+              <th style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 14px;text-align:left;font-weight:400;">Station</th>
+            </tr>
+          </thead>
+          <tbody id="roster-body"></tbody>
+        </table>
+        <div id="roster-count" style="font-size:12px;color:var(--gray-400);margin-top:0.75rem;letter-spacing:0.04em;"></div>
       </div>
     </div>
   </div>
@@ -1225,6 +1420,7 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
   function showPage(id, linkEl) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1240,6 +1436,268 @@
     }
     document.querySelector('.hamburger') && document.querySelector('nav ul').classList.remove('open');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showRec(id, btn) {
+    document.querySelectorAll('.rec-page').forEach(p => { p.style.display = 'none'; p.classList.remove('active'); });
+    document.querySelectorAll('.rec-tab').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    el.classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (id === 'rec-stats') initCharts();
+    if (id === 'rec-roster') initRoster();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function submitIncidentForm(e) {
+    e.preventDefault();
+    const ref = 'SAHP-IR-2026-' + Math.floor(10000 + Math.random() * 90000);
+    document.getElementById('ref-num').textContent = ref;
+    document.getElementById('form-confirm').style.display = 'block';
+    e.target.style.display = 'none';
+    window.scrollTo({ top: document.getElementById('form-confirm').offsetTop - 100, behavior: 'smooth' });
+  }
+
+  let chartsInit = false;
+  function initCharts() {
+    if (chartsInit) return;
+    chartsInit = true;
+    const blue = '#185FA5', lightBlue = '#378ADD', gold = '#C8820E', darkBlue = '#0C447C';
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const citations = [3420, 3180, 3890, 4210, 4580, 5020, 5340, 5190, 4820, 4110, 3650, 3881];
+
+    new Chart(document.getElementById('citationsChart'), {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [{
+          label: 'Citations issued',
+          data: citations,
+          backgroundColor: blue,
+          borderColor: darkBlue,
+          borderWidth: 1,
+          borderRadius: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y.toLocaleString() + ' citations' } }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#EEEDE8' }, ticks: { font: { family: 'Source Sans 3' }, color: '#888780' } },
+          x: { grid: { display: false }, ticks: { font: { family: 'Source Sans 3' }, color: '#888780' } }
+        }
+      }
+    });
+
+    const breakdownData = [48291, 3847, 741, 1204, 9182, 312];
+    const breakdownLabels = ['Citations','Felony arrests','DUI arrests','Pursuits','Collision reports','UOF incidents'];
+    const breakdownColors = [blue, darkBlue, gold, lightBlue, '#163D6B', '#8B5E0A'];
+
+    new Chart(document.getElementById('breakdownChart'), {
+      type: 'doughnut',
+      data: { labels: breakdownLabels, datasets: [{ data: breakdownData, backgroundColor: breakdownColors, borderWidth: 2, borderColor: '#fff' }] },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed.toLocaleString() } } },
+        cutout: '60%'
+      }
+    });
+
+    const legend = document.getElementById('breakdown-legend');
+    legend.innerHTML = breakdownLabels.map((l,i) =>
+      `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <div style="width:12px;height:12px;background:${breakdownColors[i]};flex-shrink:0;"></div>
+        <span>${l}: <strong>${breakdownData[i].toLocaleString()}</strong></span>
+      </div>`
+    ).join('');
+
+    new Chart(document.getElementById('pursuitsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Troop A', 'Troop B', 'Troop C', 'Troop D', 'Troop E', 'Troop F'],
+        datasets: [
+          { label: 'Initiated', data: [412, 287, 156, 198, 94, 57], backgroundColor: blue, borderRadius: 2 },
+          { label: 'Terminated (successful)', data: [318, 201, 112, 147, 71, 44], backgroundColor: gold, borderRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top', labels: { font: { family: 'Source Sans 3' }, color: '#444441' } },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y } }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#EEEDE8' }, ticks: { font: { family: 'Source Sans 3' }, color: '#888780' } },
+          x: { grid: { display: false }, ticks: { font: { family: 'Source Sans 3' }, color: '#888780' } }
+        }
+      }
+    });
+  }
+
+  const ROSTER = [
+    // TROOP A — LOS SANTOS (HQ station + Vinewood substation)
+    {badge:47,  name:'Marcus T. Reyes',     rank:'Major',      div:'Troop A', station:'Los Santos HQ'},
+    {badge:112, name:'Sandra L. Ortega',    rank:'Captain',    div:'Troop A', station:'Los Santos HQ'},
+    {badge:238, name:'David H. Knowles',    rank:'Captain',    div:'Troop A', station:'Vinewood Substation'},
+    {badge:331, name:'Patricia M. Webb',    rank:'Lieutenant', div:'Troop A', station:'Los Santos HQ'},
+    {badge:409, name:'Terrence A. Gilliam', rank:'Lieutenant', div:'Troop A', station:'Los Santos HQ'},
+    {badge:502, name:'Brian K. Nakamura',   rank:'Lieutenant', div:'Troop A', station:'Vinewood Substation'},
+    {badge:17,  name:'Rosa E. Delgado',     rank:'Sergeant',   div:'Troop A', station:'Los Santos HQ'},
+    {badge:88,  name:'Carl J. Hutchins',    rank:'Sergeant',   div:'Troop A', station:'Los Santos HQ'},
+    {badge:193, name:'Tyrone B. Mason',     rank:'Sergeant',   div:'Troop A', station:'Los Santos HQ'},
+    {badge:277, name:'Alicia F. Cruz',      rank:'Sergeant',   div:'Troop A', station:'Vinewood Substation'},
+    {badge:354, name:'Owen G. Stafford',    rank:'Corporal',   div:'Troop A', station:'Los Santos HQ'},
+    {badge:421, name:'Debra N. Fontaine',   rank:'Corporal',   div:'Troop A', station:'Los Santos HQ'},
+    {badge:538, name:'Jerome L. Pitts',     rank:'Corporal',   div:'Troop A', station:'Vinewood Substation'},
+    {badge:614, name:'Vanessa R. Tran',     rank:'Trooper II', div:'Troop A', station:'Los Santos HQ'},
+    {badge:672, name:'Samuel O. Burke',     rank:'Trooper II', div:'Troop A', station:'Los Santos HQ'},
+    {badge:715, name:'Chloe A. Merritt',    rank:'Trooper II', div:'Troop A', station:'Los Santos HQ'},
+    {badge:784, name:'Darnell C. Pope',     rank:'Trooper II', div:'Troop A', station:'Los Santos HQ'},
+    {badge:829, name:'Isabel M. Santos',    rank:'Trooper II', div:'Troop A', station:'Vinewood Substation'},
+    {badge:863, name:'Kevin T. Zhao',       rank:'Trooper II', div:'Troop A', station:'Vinewood Substation'},
+    {badge:34,  name:'Amber J. Fletcher',   rank:'Trooper I',  div:'Troop A', station:'Los Santos HQ'},
+    {badge:97,  name:'Marcus D. Ewell',     rank:'Trooper I',  div:'Troop A', station:'Los Santos HQ'},
+    {badge:156, name:'Tasha R. Monroe',     rank:'Trooper I',  div:'Troop A', station:'Los Santos HQ'},
+    {badge:218, name:'Patrick F. Quinn',    rank:'Trooper I',  div:'Troop A', station:'Los Santos HQ'},
+    {badge:289, name:'Diana L. Park',       rank:'Trooper I',  div:'Troop A', station:'Los Santos HQ'},
+    {badge:347, name:'Reginald A. Holt',    rank:'Trooper I',  div:'Troop A', station:'Vinewood Substation'},
+    {badge:416, name:'Monica C. Vega',      rank:'Trooper I',  div:'Troop A', station:'Vinewood Substation'},
+    {badge:478, name:'Nathan B. Osei',      rank:'Trooper I',  div:'Troop A', station:'Vinewood Substation'},
+    // TROOP B — BLAINE COUNTY
+    {badge:63,  name:'Robert V. Castillo',  rank:'Major',      div:'Troop B', station:'Sandy Shores Station'},
+    {badge:144, name:'Heather L. Bishop',   rank:'Captain',    div:'Troop B', station:'Sandy Shores Station'},
+    {badge:309, name:'Frank D. Salazar',    rank:'Lieutenant', div:'Troop B', station:'Sandy Shores Station'},
+    {badge:397, name:'Lorraine T. Knox',    rank:'Lieutenant', div:'Troop B', station:'Sandy Shores Station'},
+    {badge:26,  name:'Curtis A. Hayward',   rank:'Sergeant',   div:'Troop B', station:'Sandy Shores Station'},
+    {badge:119, name:'Felicia M. Dunn',     rank:'Sergeant',   div:'Troop B', station:'Sandy Shores Station'},
+    {badge:204, name:'Brett L. Simmons',    rank:'Sergeant',   div:'Troop B', station:'Sandy Shores Station'},
+    {badge:361, name:'Yolanda K. Frost',    rank:'Corporal',   div:'Troop B', station:'Sandy Shores Station'},
+    {badge:443, name:'Dwayne P. Ingram',    rank:'Corporal',   div:'Troop B', station:'Sandy Shores Station'},
+    {badge:557, name:'Stephanie N. Chu',    rank:'Trooper II', div:'Troop B', station:'Sandy Shores Station'},
+    {badge:629, name:'Travis R. Bonds',     rank:'Trooper II', div:'Troop B', station:'Sandy Shores Station'},
+    {badge:701, name:'Carolyn J. Whitfield',rank:'Trooper II', div:'Troop B', station:'Sandy Shores Station'},
+    {badge:748, name:'Omar T. Lawson',      rank:'Trooper II', div:'Troop B', station:'Sandy Shores Station'},
+    {badge:812, name:'Bridget A. Pryce',    rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:877, name:'Damien C. Ruiz',      rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:53,  name:'Kelsey M. Wade',      rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:138, name:'Elijah F. Torres',    rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:247, name:'Megan A. Hollins',    rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:318, name:'Victor J. Owens',     rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:384, name:'Candice L. Penn',     rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    {badge:452, name:'Rodney T. Graham',    rank:'Trooper I',  div:'Troop B', station:'Sandy Shores Station'},
+    // TROOP C — PALETO BAY
+    {badge:71,  name:'Gloria R. Espinoza',  rank:'Major',      div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:162, name:'Kenneth A. Wheeler',  rank:'Captain',    div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:284, name:'Donna F. Strickland', rank:'Lieutenant', div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:376, name:'Antoine B. Marsh',    rank:'Lieutenant', div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:41,  name:'Roberta N. Chambers', rank:'Sergeant',   div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:127, name:'Wallace T. Bright',   rank:'Sergeant',   div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:221, name:'Natasha C. Greer',    rank:'Corporal',   div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:336, name:'Harold L. Payne',     rank:'Corporal',   div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:489, name:'Christy M. Nguyen',   rank:'Trooper II', div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:573, name:'Leroy A. Coleman',    rank:'Trooper II', div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:641, name:'Sabrina J. Ellis',    rank:'Trooper II', div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:724, name:'Clifton R. Bates',    rank:'Trooper II', div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:793, name:'Yvonne K. Hardy',     rank:'Trooper I',  div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:844, name:'Phillip C. Norman',   rank:'Trooper I',  div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:908, name:'Alexis T. Booker',    rank:'Trooper I',  div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:77,  name:'Sherman D. Walton',   rank:'Trooper I',  div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:168, name:'Priscilla A. Hines',  rank:'Trooper I',  div:'Troop C', station:'Paleto Bay Academy'},
+    {badge:253, name:'Bernard F. Cross',    rank:'Trooper I',  div:'Troop C', station:'Paleto Bay Academy'},
+    // TROOP D — ALAMO SEA
+    {badge:92,  name:'Phillip A. Garrett',  rank:'Major',      div:'Troop D', station:'Grapeseed Substation'},
+    {badge:183, name:'Claudia R. Mosley',   rank:'Captain',    div:'Troop D', station:'Grapeseed Substation'},
+    {badge:302, name:'Edwin T. Poole',      rank:'Lieutenant', div:'Troop D', station:'Grapeseed Substation'},
+    {badge:57,  name:'Henrietta J. Banks',  rank:'Sergeant',   div:'Troop D', station:'Grapeseed Substation'},
+    {badge:148, name:'Ronnie A. Sutton',    rank:'Sergeant',   div:'Troop D', station:'Grapeseed Substation'},
+    {badge:264, name:'Loretta C. Sparks',   rank:'Corporal',   div:'Troop D', station:'Grapeseed Substation'},
+    {badge:379, name:'Cecil M. Watkins',    rank:'Corporal',   div:'Troop D', station:'Grapeseed Substation'},
+    {badge:517, name:'Brenda L. Hodge',     rank:'Trooper II', div:'Troop D', station:'Grapeseed Substation'},
+    {badge:588, name:'Perry T. Nielsen',    rank:'Trooper II', div:'Troop D', station:'Grapeseed Substation'},
+    {badge:657, name:'Gwendolyn A. Sparks', rank:'Trooper II', div:'Troop D', station:'Grapeseed Substation'},
+    {badge:733, name:'Lionel C. Bryant',    rank:'Trooper I',  div:'Troop D', station:'Grapeseed Substation'},
+    {badge:799, name:'Alma R. Jefferson',   rank:'Trooper I',  div:'Troop D', station:'Grapeseed Substation'},
+    {badge:856, name:'Carlton J. Stone',    rank:'Trooper I',  div:'Troop D', station:'Grapeseed Substation'},
+    {badge:913, name:'Felipa M. Dominguez', rank:'Trooper I',  div:'Troop D', station:'Grapeseed Substation'},
+    {badge:29,  name:'Derek A. Holloway',   rank:'Trooper I',  div:'Troop D', station:'Grapeseed Substation'},
+    {badge:108, name:'Nora T. Williamson',  rank:'Trooper I',  div:'Troop D', station:'Grapeseed Substation'},
+    // TROOP E — GRAPESEED
+    {badge:131, name:'Arthur L. Fleming',   rank:'Major',      div:'Troop E', station:'Harmony Substation'},
+    {badge:267, name:'Beatrice C. Ingram',  rank:'Captain',    div:'Troop E', station:'Harmony Substation'},
+    {badge:388, name:'Douglas T. Hagan',    rank:'Lieutenant', div:'Troop E', station:'Harmony Substation'},
+    {badge:82,  name:'Josephine R. Gibbs',  rank:'Sergeant',   div:'Troop E', station:'Harmony Substation'},
+    {badge:174, name:'Chester A. Moody',    rank:'Sergeant',   div:'Troop E', station:'Harmony Substation'},
+    {badge:296, name:'Annette L. Hoover',   rank:'Corporal',   div:'Troop E', station:'Harmony Substation'},
+    {badge:413, name:'Wendell C. Powers',   rank:'Corporal',   div:'Troop E', station:'Harmony Substation'},
+    {badge:543, name:'Constance M. Byrd',   rank:'Trooper II', div:'Troop E', station:'Harmony Substation'},
+    {badge:607, name:'Randall T. Yates',    rank:'Trooper II', div:'Troop E', station:'Harmony Substation'},
+    {badge:683, name:'Suzanne A. Parrish',  rank:'Trooper II', div:'Troop E', station:'Harmony Substation'},
+    {badge:752, name:'Lamar C. Dawson',     rank:'Trooper I',  div:'Troop E', station:'Harmony Substation'},
+    {badge:818, name:'Adrienne J. Weaver',  rank:'Trooper I',  div:'Troop E', station:'Harmony Substation'},
+    {badge:871, name:'Cornelius T. Sparks', rank:'Trooper I',  div:'Troop E', station:'Harmony Substation'},
+    {badge:936, name:'Tammy L. Fitzgerald', rank:'Trooper I',  div:'Troop E', station:'Harmony Substation'},
+    {badge:19,  name:'Reginald C. Burnett', rank:'Trooper I',  div:'Troop E', station:'Harmony Substation'},
+    // TROOP F — AIR & MOTOR
+    {badge:103, name:'Vincent A. Okafor',   rank:'Major',      div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:229, name:'Denise R. Caldwell',  rank:'Captain',    div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:341, name:'Frederick L. Stone',  rank:'Captain',    div:'Troop F', station:'Los Santos HQ'},
+    {badge:457, name:'Rhonda T. Blackwell', rank:'Lieutenant', div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:561, name:'Eugene C. Mercer',    rank:'Lieutenant', div:'Troop F', station:'Los Santos HQ'},
+    {badge:113, name:'Shirley A. Caldwell', rank:'Sergeant',   div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:231, name:'Theodore M. Cross',   rank:'Sergeant',   div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:349, name:'Vivian L. Owens',     rank:'Sergeant',   div:'Troop F', station:'Los Santos HQ'},
+    {badge:467, name:'Clyde T. Hampton',    rank:'Corporal',   div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:579, name:'Geneva A. Stokes',    rank:'Corporal',   div:'Troop F', station:'Los Santos HQ'},
+    {badge:648, name:'Marvin J. Flowers',   rank:'Trooper II', div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:712, name:'Olga R. Christensen', rank:'Trooper II', div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:769, name:'Sherman T. Pittman',  rank:'Trooper II', div:'Troop F', station:'Los Santos HQ'},
+    {badge:831, name:'Dolores C. Vance',    rank:'Trooper II', div:'Troop F', station:'Los Santos HQ'},
+    {badge:886, name:'Lorenzo A. Garza',    rank:'Trooper I',  div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:942, name:'Paulette M. Norris',  rank:'Trooper I',  div:'Troop F', station:'Sandy Shores Airfield'},
+    {badge:65,  name:'Wilbur C. Jennings',  rank:'Trooper I',  div:'Troop F', station:'Los Santos HQ'},
+    {badge:158, name:'Estelle T. Byrd',     rank:'Trooper I',  div:'Troop F', station:'Los Santos HQ'},
+  ];
+
+  let rosterInit = false;
+  function initRoster() {
+    if (rosterInit) return;
+    rosterInit = true;
+    renderRoster(ROSTER);
+  }
+
+  function renderRoster(data) {
+    const tbody = document.getElementById('roster-body');
+    const rankOrder = ['Major','Captain','Lieutenant','Sergeant','Corporal','Trooper II','Trooper I'];
+    data.sort((a,b) => {
+      if (a.div !== b.div) return a.div.localeCompare(b.div);
+      return rankOrder.indexOf(a.rank) - rankOrder.indexOf(b.rank);
+    });
+    tbody.innerHTML = data.map((o,i) => `
+      <tr style="border-bottom:1px solid var(--gray-100);background:${i%2===0?'var(--white)':'var(--off-white)'};">
+        <td style="padding:10px 14px;font-family:'Oswald',sans-serif;font-size:13px;font-weight:500;color:var(--blue-deep);">${o.badge}</td>
+        <td style="padding:10px 14px;color:var(--gray-700);">${o.name}</td>
+        <td style="padding:10px 14px;color:var(--gray-700);">${o.rank}</td>
+        <td style="padding:10px 14px;color:var(--gray-700);">${o.div}</td>
+        <td style="padding:10px 14px;color:var(--gray-700);">${o.station}</td>
+      </tr>`).join('');
+    document.getElementById('roster-count').textContent = `Showing ${data.length} of ${ROSTER.length} officers`;
+  }
+
+  function filterRoster() {
+    const q = document.getElementById('roster-search').value.toLowerCase();
+    const div = document.getElementById('roster-filter-div').value;
+    const rank = document.getElementById('roster-filter-rank').value;
+    const filtered = ROSTER.filter(o => {
+      const matchQ = !q || o.name.toLowerCase().includes(q) || String(o.badge).includes(q) || o.rank.toLowerCase().includes(q) || o.station.toLowerCase().includes(q);
+      const matchDiv = !div || o.div === div;
+      const matchRank = !rank || o.rank === rank;
+      return matchQ && matchDiv && matchRank;
+    });
+    renderRoster(filtered);
   }
 </script>
 
