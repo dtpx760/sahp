@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Andreas Highway Patrol</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-deep:   #042C53;
+    --blue-dark:   #0C447C;
+    --blue-mid:    #185FA5;
+    --blue-bright: #378ADD;
+    --blue-light:  #B5D4F4;
+    --blue-pale:   #E6F1FB;
+    --gold:        #BA7517;
+    --gold-light:  #FAC775;
+    --white:       #FFFFFF;
+    --off-white:   #F7F7F5;
+    --gray-100:    #EEEDE8;
+    --gray-200:    #D3D1C7;
+    --gray-400:    #888780;
+    --gray-700:    #444441;
+    --gray-900:    #1A1A18;
+    --font-head:   'Oswald', sans-serif;
+    --font-body:   'Source Sans 3', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--off-white);
+    color: var(--gray-900);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── ALERT BAR ── */
+  .alert-bar {
+    background: var(--blue-deep);
+    color: var(--blue-light);
+    font-family: var(--font-head);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 2rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .alert-bar svg { flex-shrink: 0; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--blue-dark);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    text-decoration: none;
+  }
+
+  .logo-text h1 {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+
+  .logo-text p {
+    font-size: 11px;
+    color: var(--blue-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ── NAV ── */
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0;
+  }
+
+  nav ul li a {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    text-decoration: none;
+    padding: 18px 16px;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  nav ul li a:hover,
+  nav ul li a.active {
+    color: var(--white);
+    border-bottom-color: var(--gold);
+  }
+
+  /* hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--blue-light);
+    transition: all 0.3s;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--blue-deep);
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.015) 40px,
+        rgba(255,255,255,0.015) 80px
+      );
+  }
+
+  .hero-badge {
+    margin: 0 auto 2rem;
+    display: block;
+  }
+
+  .hero h2 {
+    font-family: var(--font-head);
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .hero h2 span {
+    color: var(--gold-light);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--blue-light);
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 1.5rem auto;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  .hero-meta-item {
+    text-align: center;
+  }
+
+  .hero-meta-item .num {
+    font-family: var(--font-head);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .hero-meta-item .lbl {
+    font-size: 11px;
+    color: var(--blue-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .hero-meta-sep {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-head);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .section h2 {
+    font-family: var(--font-head);
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 600;
+    color: var(--blue-deep);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .section-intro {
+    font-size: 16px;
+    color: var(--gray-400);
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── NEWS ── */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .news-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-top: 3px solid var(--blue-mid);
+    padding: 1.5rem;
+    transition: border-top-color 0.2s, transform 0.2s;
+  }
+
+  .news-card:hover {
+    border-top-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .news-date {
+    font-family: var(--font-head);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 0.5rem;
+  }
+
+  .news-title {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--blue-deep);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+
+  .news-body {
+    font-size: 14px;
+    color: var(--gray-400);
+    line-height: 1.7;
+  }
+
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    background: var(--blue-deep);
+    padding: 3rem 2rem;
+  }
+
+  .stat-strip-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    text-align: center;
+  }
+
+  .stat-item {
+    padding: 1.5rem 2rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .stat-num span {
+    color: var(--gold-light);
+  }
+
+  .stat-lbl {
+    font-size: 12px;
+    color: var(--blue-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--blue-bright);
+  }
+
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--blue-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .card-icon svg { color: var(--blue-mid); }
+
+  .card h3 {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--blue-deep);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--gray-400);
+    line-height: 1.65;
+  }
+
+  /* ── TROOP GRID ── */
+  .troop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--gray-200);
+    border: 1px solid var(--gray-200);
+  }
+
+  .troop-item {
+    background: var(--white);
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .troop-letter {
+    font-family: var(--font-head);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue-light);
+    line-height: 1;
+    min-width: 28px;
+  }
+
+  .troop-info {}
+
+  .troop-name {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--blue-deep);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .troop-area {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 3px;
+  }
+
+  /* ── RANK TABLE ── */
+  .rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .rank-table thead tr {
+    background: var(--blue-deep);
+    color: var(--blue-light);
+  }
+
+  .rank-table thead th {
+    font-family: var(--font-head);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  .rank-table tbody tr {
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--white);
+    transition: background 0.15s;
+  }
+
+  .rank-table tbody tr:hover {
+    background: var(--blue-pale);
+  }
+
+  .rank-table td {
+    padding: 11px 16px;
+    color: var(--gray-700);
+  }
+
+  .rank-table td:first-child {
+    font-family: var(--font-head);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue-deep);
+    font-weight: 500;
+  }
+
+  /* ── REQ LIST ── */
+  .req-list {
+    list-style: none;
+    border: 1px solid var(--gray-100);
+    background: var(--white);
+  }
+
+  .req-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 15px;
+    color: var(--gray-700);
+  }
+
+  .req-list li:last-child { border-bottom: none; }
+
+  .req-check {
+    width: 20px;
+    height: 20px;
+    background: var(--blue-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .req-check svg { color: var(--white); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--blue-deep);
+    padding: 2rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .callout-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--blue-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .callout-text strong {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .callout-text p {
+    font-size: 13px;
+    color: var(--blue-light);
+    margin: 0;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .contact-card-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--blue-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--blue-mid);
+  }
+
+  .contact-lbl {
+    font-family: var(--font-head);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 3px;
+  }
+
+  .contact-val {
+    font-size: 15px;
+    color: var(--blue-deep);
+    font-weight: 500;
+  }
+
+  .contact-val a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-val a:hover {
+    color: var(--blue-mid);
+    text-decoration: underline;
+  }
+
+  /* ── RECORDS ── */
+  .records-note {
+    background: var(--blue-pale);
+    border-left: 4px solid var(--blue-mid);
+    padding: 1rem 1.25rem;
+    font-size: 14px;
+    color: var(--blue-deep);
+    margin: 1.5rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gray-900);
+    padding: 3rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+
+  .footer-brand h3 {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-brand p {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-col h4 {
+    font-family: var(--font-head);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-col ul li a {
+    font-size: 13px;
+    color: var(--gray-400);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul li a:hover { color: var(--white); }
+
+  .footer-bottom {
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
+    color: var(--gray-400);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-bottom .badge-sm {
+    font-family: var(--font-head);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border: 1px solid rgba(186,117,23,0.4);
+    padding: 4px 10px;
+  }
+
+  /* ── LEADERSHIP ── */
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--gray-200);
+    border: 1px solid var(--gray-200);
+  }
+
+  .leader-card {
+    background: var(--white);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .leader-rank {
+    font-family: var(--font-head);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 4px;
+  }
+
+  .leader-name {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--blue-deep);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--blue-dark); padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+    nav ul.open { display: flex; }
+    nav ul li a { padding: 12px 2rem; border-bottom: none; border-left: 3px solid transparent; margin: 0; }
+    nav ul li a.active, nav ul li a:hover { border-left-color: var(--gold); }
+    .hamburger { display: flex; }
+    header { position: relative; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .stat-strip-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
+    .hero-meta-sep { display: none; }
+    .footer-top { flex-direction: column; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .page.active .section {
+    animation: fadeUp 0.35s ease both;
+  }
+
+  .page.active .section:nth-child(2) { animation-delay: 0.05s; }
+  .page.active .section:nth-child(3) { animation-delay: 0.1s; }
+</style>
+</head>
+<body>
+
+<!-- ALERT -->
+<div class="alert-bar">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  Advisory: Increased patrol activity on Route 1 corridor and Senora Freeway this week
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo-area" href="#" onclick="showPage('home'); return false;">
+      <img src="SAHP_logo.webp" width="52" height="52" alt="SAHP badge">
+      <div class="logo-text">
+        <h1>San Andreas Highway Patrol</h1>
+        <p>State of San Andreas · Est. 1929</p>
+      </div>
+    </a>
+
+    <button class="hamburger" aria-label="Open menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav>
+      <ul id="nav-links">
+        <li><a href="#" class="active" onclick="showPage('home', this); return false;">Home</a></li>
+        <li><a href="#" onclick="showPage('about', this); return false;">About</a></li>
+        <li><a href="#" onclick="showPage('divisions', this); return false;">Divisions</a></li>
+        <li><a href="#" onclick="showPage('recruitment', this); return false;">Recruitment</a></li>
+        <li><a href="#" onclick="showPage('records', this); return false;">Public records</a></li>
+        <li><a href="#" onclick="showPage('contact', this); return false;">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ════════════════════════════════ HOME ════════════════════════════════ -->
+<div id="home" class="page active">
+
+  <div class="hero">
+    <img class="hero-badge" src="SAHP_logo.webp" width="160" height="160" alt="SAHP badge">
+    <h2>Protecting <span>every road.</span><br>Every mile. Every day.</h2>
+    <div class="hero-divider"></div>
+    <p>The San Andreas Highway Patrol has served the people of San Andreas since 1929. Six troop divisions, 1,847 sworn officers, statewide coverage.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="num">1,847</div><div class="lbl">Sworn officers</div></div>
+      <div class="hero-meta-sep"></div>
+      <div class="hero-meta-item"><div class="num">6</div><div class="lbl">Troop divisions</div></div>
+      <div class="hero-meta-sep"></div>
+      <div class="hero-meta-item"><div class="num">412</div><div class="lbl">Patrol vehicles</div></div>
+      <div class="hero-meta-sep"></div>
+      <div class="hero-meta-item"><div class="num">14</div><div class="lbl">Aircraft assigned</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Latest news</div>
+    <h2>News &amp; announcements</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-date">June 2, 2026</div>
+        <div class="news-title">SAHP expands Senora Freeway air support unit</div>
+        <p class="news-body">Two additional Maverick helicopters have been deployed to the Eastern Division following a rise in high-speed pursuit incidents along the SR-1 and Senora Freeway corridors. Aircraft operate out of Sandy Shores Airfield on rotating 12-hour shifts.</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date">May 28, 2026</div>
+        <div class="news-title">Commissioner Holloway announces revised pursuit policy</div>
+        <p class="news-body">Effective June 1, all SAHP troopers are required to complete updated PIT maneuver certification under the revised State Vehicle Pursuit Policy, aligning standards with LSPD and LSSD protocols.</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date">May 19, 2026</div>
+        <div class="news-title">Applications open for Cadet Class 44</div>
+        <p class="news-body">The 44th Cadet Class begins August 11, 2026 at the SAHP Training Academy in Paleto Bay. Applicants must be 21 years of age and hold a valid San Andreas driver's license.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-strip-inner">
+      <div class="stat-item"><div class="stat-num">97<span>%</span></div><div class="stat-lbl">Freeway coverage</div></div>
+      <div class="stat-item"><div class="stat-num">26</div><div class="stat-lbl">District stations</div></div>
+      <div class="stat-item"><div class="stat-num">44<span>th</span></div><div class="stat-lbl">Cadet class recruiting</div></div>
+      <div class="stat-item"><div class="stat-num">24<span>/7</span></div><div class="stat-lbl">Dispatch coverage</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Specialized units</div>
+    <h2>Unit capabilities</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        </div>
+        <h3>Air operations</h3>
+        <p>Rotary and fixed-wing aircraft for pursuit support, search and rescue, and statewide aerial surveillance.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M10 18H3v-6l2-4h8l4 4h1a2 2 0 012 2v4h-3"/></svg>
+        </div>
+        <h3>Motor unit</h3>
+        <p>Motorcycle troopers on high-density corridors, special events, and freeway enforcement details.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.96-1.45-2.344-2.5"/><path d="M8 14v.5A3.5 3.5 0 0011.5 18v0a3.5 3.5 0 003.5-3.5V14"/><path d="M6.5 10H10M14 10h3.5"/></svg>
+        </div>
+        <h3>K-9 unit</h3>
+        <p>Trained canine teams for narcotics detection, fugitive tracking, and handler protection duties.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Criminal interdiction</h3>
+        <p>Unmarked patrol teams targeting narcotics trafficking and organized crime on state highways.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
+<div id="about" class="page">
+
+  <div class="hero" style="padding: 4rem 2rem 3rem;">
+    <h2 style="font-size: clamp(28px,4vw,48px);">About the <span>SAHP</span></h2>
+    <p>Serving San Andreas since 1929.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mission</div>
+    <h2>Who we are</h2>
+    <p class="section-intro">The San Andreas Highway Patrol is the primary law enforcement agency responsible for traffic regulation, highway safety, and criminal interdiction on state highways, freeways, and unincorporated roads across San Andreas.</p>
+    <p style="font-size:15px; color:var(--gray-400); line-height:1.8; max-width:700px;">Founded in 1929 under Governor Clarence Holt, the SAHP was established in response to rapid growth in automobile traffic along the coastal Route 1 corridor. Over the following decades the agency expanded statewide, absorbing the rural Road Patrol and the State Motor Vehicle Inspectorate. Today, SAHP operates from 26 district stations across six troop divisions, employing over 1,800 sworn officers and 400 civilian staff.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Command staff</div>
+    <h2>Leadership</h2>
+    <div class="leadership-grid">
+      <div class="leader-card"><div class="leader-rank">Commissioner</div><div class="leader-name">Patricia Holloway</div></div>
+      <div class="leader-card"><div class="leader-rank">Deputy Commissioner</div><div class="leader-name">Roland Mercer</div></div>
+      <div class="leader-card"><div class="leader-rank">Chief of Staff</div><div class="leader-name">Cmdr. Anita Vasquez</div></div>
+      <div class="leader-card"><div class="leader-rank">Dir. Field Operations</div><div class="leader-name">Major Dennis Falk</div></div>
+      <div class="leader-card"><div class="leader-rank">Dir. Air Operations</div><div class="leader-name">Major T. Okafor</div></div>
+      <div class="leader-card"><div class="leader-rank">General Counsel</div><div class="leader-name">Sandra Breem, Esq.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rank structure</div>
+    <h2>Chain of command</h2>
+    <table class="rank-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Role</th>
+          <th>Insignia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Commissioner</td><td>Statewide command, governor appointment</td><td>Five-point star</td></tr>
+        <tr><td>Deputy Commissioner</td><td>Operations oversight</td><td>Four-point star</td></tr>
+        <tr><td>Major</td><td>Troop division commander</td><td>Oak leaf cluster</td></tr>
+        <tr><td>Captain</td><td>District station commander</td><td>Two bars</td></tr>
+        <tr><td>Lieutenant</td><td>Shift supervisor</td><td>One bar</td></tr>
+        <tr><td>Sergeant</td><td>Field supervisor</td><td>Three chevrons</td></tr>
+        <tr><td>Corporal</td><td>Senior patrol officer</td><td>Two chevrons</td></tr>
+        <tr><td>Trooper I / II</td><td>Patrol officer</td><td>Shield badge</td></tr>
+        <tr><td>Cadet</td><td>Academy trainee</td><td>Trainee patch</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ DIVISIONS ════════════════════════════════ -->
+<div id="divisions" class="page">
+
+  <div class="hero" style="padding: 4rem 2rem 3rem;">
+    <h2 style="font-size: clamp(28px,4vw,48px);">Troop <span>Divisions</span></h2>
+    <p>Six regional commands covering every mile of San Andreas.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Regional commands</div>
+    <h2>Troop assignments</h2>
+    <p class="section-intro">SAHP is organized into six regional troop commands, each responsible for a distinct geographic area of San Andreas.</p>
+    <div class="troop-grid">
+      <div class="troop-item"><div class="troop-letter">A</div><div class="troop-info"><div class="troop-name">Los Santos</div><div class="troop-area">Greater LS metro, Route 1 south, Olympic Freeway</div></div></div>
+      <div class="troop-item"><div class="troop-letter">B</div><div class="troop-info"><div class="troop-name">Blaine County</div><div class="troop-area">Senora Freeway, SR-13, Sandy Shores district</div></div></div>
+      <div class="troop-item"><div class="troop-letter">C</div><div class="troop-info"><div class="troop-name">Paleto Bay</div><div class="troop-area">Route 1 north, Mt. Chiliad corridor, Chumash</div></div></div>
+      <div class="troop-item"><div class="troop-letter">D</div><div class="troop-info"><div class="troop-name">Alamo Sea</div><div class="troop-area">East Vinewood overpass, Route 68, Stab City</div></div></div>
+      <div class="troop-item"><div class="troop-letter">E</div><div class="troop-info"><div class="troop-name">Grapeseed</div><div class="troop-area">Zancudo River valley, Harmony, Grand Senora</div></div></div>
+      <div class="troop-item"><div class="troop-letter">F</div><div class="troop-info"><div class="troop-name">Air &amp; Motor</div><div class="troop-area">Statewide air operations, motorcycle unit</div></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Specialized units</div>
+    <h2>Unit capabilities</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+        <h3>Air operations</h3>
+        <p>Rotary and fixed-wing aircraft for pursuit support, search and rescue, and aerial surveillance statewide.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M10 18H3v-6l2-4h8l4 4h1a2 2 0 012 2v4h-3"/></svg></div>
+        <h3>Motor unit</h3>
+        <p>Motorcycle troopers on high-density corridors, special events, and freeway enforcement.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/><path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.96-1.45-2.344-2.5"/><path d="M8 14v.5A3.5 3.5 0 0011.5 18v0a3.5 3.5 0 003.5-3.5V14"/><path d="M6.5 10H10M14 10h3.5"/></svg></div>
+        <h3>K-9 unit</h3>
+        <p>Canine teams for narcotics detection, fugitive tracking, and handler protection duties.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Criminal interdiction</h3>
+        <p>Unmarked patrol teams targeting narcotics trafficking and organized crime on state highways.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ RECRUITMENT ════════════════════════════════ -->
+<div id="recruitment" class="page">
+
+  <div class="hero" style="padding: 4rem 2rem 3rem;">
+    <h2 style="font-size: clamp(28px,4vw,48px);">Join the <span>Patrol</span></h2>
+    <p>Cadet Class 44 — applications now open.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cadet Class 44</div>
+    <h2>About the academy</h2>
+    <p class="section-intro">The San Andreas Highway Patrol is seeking qualified applicants for the 44th Cadet Class. Training begins August 11, 2026 at the SAHP Training Academy, Paleto Bay.</p>
+    <p style="font-size:15px;color:var(--gray-400);line-height:1.8;max-width:700px;margin-bottom:1.5rem;">The academy runs 26 weeks and covers firearms qualification, emergency vehicle operations, first aid certification, legal studies, and field training rotations across multiple troop divisions. Graduates are assigned as Trooper I with full state benefits and a competitive salary package.</p>
+
+    <div class="callout">
+      <div class="callout-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="callout-text">
+        <strong>Application deadline — July 15, 2026</strong>
+        <p>Academy start date: August 11, 2026 · Paleto Bay Training Facility · 26-week program</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Eligibility</div>
+    <h2>Minimum requirements</h2>
+    <ul class="req-list">
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>21 years of age or older at time of application</li>
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Valid San Andreas driver's license with clean record</li>
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>High school diploma or GED equivalent</li>
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>No felony convictions</li>
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Pass physical fitness and written examinations</li>
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Pass background investigation and polygraph examination</li>
+      <li><div class="req-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Pass psychological evaluation</li>
+    </ul>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-strip-inner">
+      <div class="stat-item"><div class="stat-num">$52<span>K</span></div><div class="stat-lbl">Cadet starting salary</div></div>
+      <div class="stat-item"><div class="stat-num">$61<span>K</span></div><div class="stat-lbl">Trooper I base pay</div></div>
+      <div class="stat-item"><div class="stat-num">26</div><div class="stat-lbl">Week academy</div></div>
+      <div class="stat-item"><div class="stat-num">Full</div><div class="stat-lbl">State benefits</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p style="font-size:15px;color:var(--gray-400);">To request an application packet, contact the SAHP Recruitment Office at <strong style="color:var(--blue-deep);">(555) 0-RECRUIT</strong> or visit headquarters at the Rockford Hills Government Center, Los Santos.</p>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ RECORDS ════════════════════════════════ -->
+<div id="records" class="page">
+
+  <div class="hero" style="padding: 4rem 2rem 3rem;">
+    <h2 style="font-size: clamp(28px,4vw,48px);">Public <span>Records</span></h2>
+    <p>Transparency and accountability in law enforcement.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">SAFOIA compliance</div>
+    <h2>Records &amp; transparency</h2>
+    <p class="section-intro">The San Andreas Highway Patrol complies fully with the San Andreas Freedom of Information Act. Records are available through the Office of Public Affairs.</p>
+    <div class="records-note">
+      Submit SAFOIA requests in writing to the Office of Public Affairs, SAHP Headquarters, Rockford Hills Government Center, Los Santos, SA 90210. Allow up to 10 business days for processing.
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <h3>Incident reports</h3>
+        <p>Traffic collision and incident reports available 10 business days after filing. Fee of $0.10 per page.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h3>Annual statistics</h3>
+        <p>Yearly enforcement statistics, pursuit data, and use-of-force summaries published each March.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <h3>Personnel rosters</h3>
+        <p>Sworn officer rosters by troop division, updated quarterly. Exempt personnel not listed.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Use-of-force policy</h3>
+        <p>Current use-of-force continuum and pursuit intervention policy documents available for download.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ CONTACT ════════════════════════════════ -->
+<div id="contact" class="page">
+
+  <div class="hero" style="padding: 4rem 2rem 3rem;">
+    <h2 style="font-size: clamp(28px,4vw,48px);">Contact <span>Us</span></h2>
+    <p>For non-emergency inquiries. For emergencies, dial 911.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Get in touch</div>
+    <h2>Contacts &amp; locations</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1.08h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div><div class="contact-lbl">Non-emergency dispatch</div><div class="contact-val">(555) 0-SAHP</div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1.08h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div><div class="contact-lbl">Recruitment office</div><div class="contact-val">(555) 0-RECRUIT</div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="contact-lbl">Public affairs</div><div class="contact-val"><a href="mailto:publicaffairs@sahp.sa.gov">publicaffairs@sahp.sa.gov</a></div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="contact-lbl">Media inquiries</div><div class="contact-val"><a href="mailto:media@sahp.sa.gov">media@sahp.sa.gov</a></div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="contact-lbl">Headquarters</div><div class="contact-val">Rockford Hills Government Center<br>Los Santos, SA 90210</div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><div class="contact-lbl">Office hours</div><div class="contact-val">Mon – Fri, 08:00 – 17:00</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Station locations</div>
+    <h2>District stations</h2>
+    <div class="troop-grid">
+      <div class="troop-item"><div class="troop-letter" style="font-size:18px;color:var(--blue-bright);">HQ</div><div class="troop-info"><div class="troop-name">Los Santos headquarters</div><div class="troop-area">Rockford Hills Government Center</div></div></div>
+      <div class="troop-item"><div class="troop-letter" style="font-size:18px;color:var(--blue-bright);">SS</div><div class="troop-info"><div class="troop-name">Sandy Shores station</div><div class="troop-area">Airfield Road, Sandy Shores</div></div></div>
+      <div class="troop-item"><div class="troop-letter" style="font-size:18px;color:var(--blue-bright);">PB</div><div class="troop-info"><div class="troop-name">Paleto Bay academy</div><div class="troop-area">North Chumash Highway, Paleto Bay</div></div></div>
+      <div class="troop-item"><div class="troop-letter" style="font-size:18px;color:var(--blue-bright);">GS</div><div class="troop-info"><div class="troop-name">Grapeseed substation</div><div class="troop-area">Route 68, Grapeseed</div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>San Andreas Highway Patrol</h3>
+        <p>State of San Andreas · Est. 1929</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Agency</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('about');return false;">About SAHP</a></li>
+            <li><a href="#" onclick="showPage('divisions');return false;">Divisions</a></li>
+            <li><a href="#" onclick="showPage('records');return false;">Public records</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('recruitment');return false;">Recruitment</a></li>
+            <li><a href="#" onclick="showPage('contact');return false;">Contact us</a></li>
+            <li><a href="#">Report a tip</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Emergency</h4>
+          <ul>
+            <li><a href="#">Dial 911</a></li>
+            <li><a href="#">Non-emergency: (555) 0-SAHP</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 State of San Andreas. All rights reserved. SAHP is an equal opportunity employer.</p>
+      <div class="badge-sm">SAFOIA compliant</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(id, linkEl) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (linkEl) {
+      linkEl.classList.add('active');
+    } else {
+      const links = document.querySelectorAll('#nav-links a');
+      const pages = ['home','about','divisions','recruitment','records','contact'];
+      const idx = pages.indexOf(id);
+      if (idx > -1) links[idx].classList.add('active');
+    }
+    document.querySelector('.hamburger') && document.querySelector('nav ul').classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
